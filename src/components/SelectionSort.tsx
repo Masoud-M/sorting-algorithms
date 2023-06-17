@@ -1,12 +1,19 @@
 import swap from "./Swap";
 
-export const getSelectionSortAnimations = (array, arraySize) => {
-  const animations = [];
+export const getSelectionSortAnimations = (
+  array: number[],
+  arraySize: number
+) => {
+  const animations: number[][] = [];
   selectionSort(array, arraySize, animations);
   return animations;
 };
 
-function selectionSort(arr, arraySize, animations) {
+function selectionSort(
+  arr: number[],
+  arraySize: number,
+  animations: number[][]
+) {
   let i, j, minIdx;
   for (i = 0; i < arraySize - 1; i++) {
     minIdx = i;

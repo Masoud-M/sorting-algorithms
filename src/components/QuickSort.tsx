@@ -1,12 +1,17 @@
 import swap from "./Swap";
 
-export const getQuickSortAnimations = (array, arraySize) => {
-  const animations = [];
+export const getQuickSortAnimations = (array: number[], arraySize: number) => {
+  const animations: number[][] = [];
   quickSort(array, 0, arraySize - 1, animations);
   return animations;
 };
 
-const quickSort = (array, low, high, animations) => {
+const quickSort = (
+  array: number[],
+  low: number,
+  high: number,
+  animations: number[][]
+) => {
   if (low < high) {
     const pivotIdx = partition(array, low, high, animations);
     quickSort(array, low, pivotIdx - 1, animations);
@@ -14,7 +19,12 @@ const quickSort = (array, low, high, animations) => {
   }
 };
 
-const partition = (array, low, high, animations) => {
+const partition = (
+  array: number[],
+  low: number,
+  high: number,
+  animations: number[][]
+) => {
   const pivot = array[high];
   let i = low - 1;
 

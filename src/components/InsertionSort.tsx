@@ -1,10 +1,17 @@
-export const getInsertionSortAnimations = (array, arraySize) => {
-  const animations = [];
+export const getInsertionSortAnimations = (
+  array: number[],
+  arraySize: number
+) => {
+  const animations: number[][] = [];
   insertionSort(array, arraySize, animations);
   return animations;
 };
 
-const insertionSort = (array, arraySize, animations) => {
+const insertionSort = (
+  array: number[],
+  arraySize: number,
+  animations: number[][]
+) => {
   let i, key, j;
   for (i = 1; i < arraySize; i++) {
     key = array[i];

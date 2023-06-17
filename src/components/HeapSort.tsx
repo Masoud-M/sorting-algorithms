@@ -1,12 +1,17 @@
 import swap from "./Swap";
 
-export const getHeapSortAnimations = (array, arraySize) => {
-  const animations = [];
+export const getHeapSortAnimations = (array: number[], arraySize: number) => {
+  const animations: number[][] = [];
   heapSort(array, arraySize, animations);
   return animations;
 };
 
-const heapify = (array, n, i, animations) => {
+const heapify = (
+  array: number[],
+  n: number,
+  i: number,
+  animations: number[][]
+) => {
   let largest = i;
   let l = 2 * i + 1;
   let r = 2 * i + 2;
@@ -25,13 +30,17 @@ const heapify = (array, n, i, animations) => {
   }
 };
 
-const buildHeap = (array, n, animations) => {
+const buildHeap = (array: number[], n: number, animations: number[][]) => {
   for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
     heapify(array, n, i, animations);
   }
 };
 
-const heapSort = (array, arraySize, animations) => {
+const heapSort = (
+  array: number[],
+  arraySize: number,
+  animations: number[][]
+) => {
   const n = arraySize;
   buildHeap(array, n, animations);
   for (let i = n - 1; i > 0; i--) {

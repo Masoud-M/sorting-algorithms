@@ -1,7 +1,11 @@
 import swap from "./Swap";
 
-function bubbleSort(array, arraySize, animations) {
-  let i, j;
+function bubbleSort(
+  array: number[],
+  arraySize: number,
+  animations: number[][]
+) {
+  let i: number, j: number;
   for (i = 0; i < arraySize - 1; i++) {
     for (j = 0; j < arraySize - 1; j++) {
       if (array[j] > array[j + 1]) {
@@ -14,8 +18,8 @@ function bubbleSort(array, arraySize, animations) {
   }
 }
 
-export const getBubbleSortAnimations = (array, arraySize) => {
-  const animations = [];
+export const getBubbleSortAnimations = (array: number[], arraySize: number) => {
+  const animations: number[][] = [];
   bubbleSort(array, arraySize, animations);
   console.log(animations);
   return animations;
