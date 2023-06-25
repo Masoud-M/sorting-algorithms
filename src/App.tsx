@@ -18,7 +18,6 @@ function App() {
   const [disableButtons, setDisableButtons] = useState(false);
   const ref = useRef(null);
   const duplicateArray = array.slice();
-  const [isStopped, setIsStopped] = useState<boolean>(false);
 
   const barWidth = arraySize > 50 ? 12 : arraySize > 25 ? 17 : 24;
   const uiBtnStyle =
@@ -79,11 +78,6 @@ function App() {
       setDisableButtons(false);
     }, animations.length * (101 - animationSpeed));
   };
-
-  // const handleStop = () => {
-  //   setIsStopped(!isStopped);
-  //   console.log(isStopped);
-  // };
 
   const bubbleSort = () => {
     const animations = getBubbleSortAnimations(duplicateArray, arraySize);
