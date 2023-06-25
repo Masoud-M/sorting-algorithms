@@ -17,8 +17,8 @@ function App() {
   const [array, setArray] = useState<number[]>([]);
   const [disableButtons, setDisableButtons] = useState(false);
   const ref = useRef(null);
-
   const duplicateArray = array.slice();
+  const [isStopped, setIsStopped] = useState<boolean>(false);
 
   const barWidth = arraySize > 50 ? 12 : arraySize > 25 ? 17 : 24;
   const uiBtnStyle =
@@ -51,6 +51,7 @@ function App() {
     const arrayBars = document.getElementsByClassName(
       "arrayBar"
     ) as HTMLCollectionOf<HTMLElement>;
+
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = i % 3 !== 1;
       if (isColorChange) {
@@ -78,6 +79,11 @@ function App() {
       setDisableButtons(false);
     }, animations.length * (101 - animationSpeed));
   };
+
+  // const handleStop = () => {
+  //   setIsStopped(!isStopped);
+  //   console.log(isStopped);
+  // };
 
   const bubbleSort = () => {
     const animations = getBubbleSortAnimations(duplicateArray, arraySize);
@@ -186,6 +192,17 @@ function App() {
             >
               Generate New Array
             </button>
+            {/* <button
+              disabled={!disableButtons}
+              onClick={handleStop}
+              className={
+                !disableButtons
+                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                  : ` bg-[#f84027] hover:-translate-y-1 cursor-pointer ${uiBtnStyle}`
+              }
+            >
+              STOP{" "}
+            </button> */}
             <button
               disabled={disableButtons}
               onClick={bubbleSort}

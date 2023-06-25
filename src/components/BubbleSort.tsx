@@ -21,6 +21,5 @@ function bubbleSort(
 export const getBubbleSortAnimations = (array: number[], arraySize: number) => {
   const animations: number[][] = [];
   bubbleSort(array, arraySize, animations);
-  console.log(animations);
   return animations;
 };
