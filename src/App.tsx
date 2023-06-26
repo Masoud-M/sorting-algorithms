@@ -44,6 +44,25 @@ function App() {
     setArray(newArray);
   };
 
+  const handleStop = () => {
+    isStopped.current = true;
+    setTimeout(() => {
+      handleRefresh();
+    }, 1000);
+  };
+
+  let isStopped = useRef(false);
+  let canContinue = useRef(false);
+
+  const checkStop = () => {
+    if (!isStopped.current) {
+      canContinue.current = true;
+    } else if (isStopped.current) {
+      canContinue.current = false;
+    }
+  };
+
+  const handleRefresh = () => window.location.reload();
   //Function to do the animations
   const animateSorting = (animations: number[][]) => {
     setDisableButtons(true);
@@ -59,17 +78,23 @@ function App() {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? "turquoise" : "#a66cff";
         setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
+          checkStop();
+          if (canContinue.current) {
+            barOneStyle.backgroundColor = color;
+            barTwoStyle.backgroundColor = color;
+          } else return;
         }, i * (101 - animationSpeed));
       } else {
         setTimeout(() => {
-          const [barOneIdx, newHeightOne, barTwoIdx, newHeightTwo] =
-            animations[i];
-          const barOneStyle = arrayBars[barOneIdx].style;
-          barOneStyle.height = `${newHeightOne}px`;
-          const barTwoStyle = arrayBars[barTwoIdx].style;
-          barTwoStyle.height = `${newHeightTwo}px`;
+          checkStop();
+          if (canContinue.current) {
+            const [barOneIdx, newHeightOne, barTwoIdx, newHeightTwo] =
+              animations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            barOneStyle.height = `${newHeightOne}px`;
+            const barTwoStyle = arrayBars[barTwoIdx].style;
+            barTwoStyle.height = `${newHeightTwo}px`;
+          } else return;
         }, i * (101 - animationSpeed));
       }
     }
@@ -117,14 +142,20 @@ function App() {
         const barTwoStyle = arrayBars[barTwoIdx].style;
         const color = i % 3 === 0 ? "turquoise" : "#a66cff";
         setTimeout(() => {
-          barOneStyle.backgroundColor = color;
-          barTwoStyle.backgroundColor = color;
+          checkStop();
+          if (canContinue.current) {
+            barOneStyle.backgroundColor = color;
+            barTwoStyle.backgroundColor = color;
+          } else return;
         }, i * (101 - animationSpeed));
       } else {
         setTimeout(() => {
-          const [barIdx, newHeight] = animations[i];
-          const barStyle = arrayBars[barIdx].style;
-          barStyle.height = `${newHeight}px`;
+          checkStop();
+          if (canContinue.current) {
+            const [barIdx, newHeight] = animations[i];
+            const barStyle = arrayBars[barIdx].style;
+            barStyle.height = `${newHeight}px`;
+          } else return;
         }, i * (101 - animationSpeed));
       }
     }
@@ -186,7 +217,7 @@ function App() {
             >
               Generate New Array
             </button>
-            {/* <button
+            <button
               disabled={!disableButtons}
               onClick={handleStop}
               className={
@@ -195,8 +226,9 @@ function App() {
                   : ` bg-[#f84027] hover:-translate-y-1 cursor-pointer ${uiBtnStyle}`
               }
             >
-              STOP{" "}
-            </button> */}
+              STOP
+            </button>
+
             <button
               disabled={disableButtons}
               onClick={bubbleSort}
