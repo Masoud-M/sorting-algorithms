@@ -20,6 +20,13 @@ function bubbleSort(
 
 export const getBubbleSortAnimations = (array: number[], arraySize: number) => {
   const animations: number[][] = [];
+  let startingTime = performance.now();
   bubbleSort(array, arraySize, animations);
-  return animations;
+  let endingTime = performance.now();
+  let proccessingTime = endingTime - startingTime;
+  const results = {
+    animations: animations,
+    proccessingTime: proccessingTime,
+  };
+  return results;
 };

@@ -2,8 +2,15 @@ import swap from "./Swap";
 
 export const getQuickSortAnimations = (array: number[], arraySize: number) => {
   const animations: number[][] = [];
+  let startingTime = performance.now();
   quickSort(array, 0, arraySize - 1, animations);
-  return animations;
+  let endingTime = performance.now();
+  let proccessingTime = endingTime - startingTime;
+  const results = {
+    animations: animations,
+    proccessingTime: proccessingTime,
+  };
+  return results;
 };
 
 const quickSort = (

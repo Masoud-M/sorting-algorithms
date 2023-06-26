@@ -46,11 +46,11 @@ function App() {
 
   const handleStop = () => {
     isStopped.current = true;
-    setTimeout(() => {
-      handleRefresh();
-    }, 1000);
   };
 
+  const handleReset = () => {
+    window.location.reload();
+  };
   let isStopped = useRef(false);
   let canContinue = useRef(false);
 
@@ -62,7 +62,6 @@ function App() {
     }
   };
 
-  const handleRefresh = () => window.location.reload();
   //Function to do the animations
   const animateSorting = (animations: number[][]) => {
     setDisableButtons(true);
@@ -104,33 +103,47 @@ function App() {
     }, animations.length * (101 - animationSpeed));
   };
 
+  const [proccessingTimeState, setProccessingTimeState] = useState(0);
+
   const bubbleSort = () => {
-    const animations = getBubbleSortAnimations(duplicateArray, arraySize);
+    setProccessingTimeState(0);
+    const results = getBubbleSortAnimations(duplicateArray, arraySize);
+    const animations = results.animations;
+    setProccessingTimeState(results.proccessingTime);
     animateSorting(animations);
   };
 
   const selectionSort = () => {
-    const animations = getSelectionSortAnimations(duplicateArray, arraySize);
+    setProccessingTimeState(0);
+    const results = getSelectionSortAnimations(duplicateArray, arraySize);
+    const animations = results.animations;
+    setProccessingTimeState(results.proccessingTime);
     animateSorting(animations);
   };
 
   const quickSort = () => {
-    const animations = getQuickSortAnimations(duplicateArray, arraySize);
+    setProccessingTimeState(0);
+    const results = getQuickSortAnimations(duplicateArray, arraySize);
+    const animations = results.animations;
+    setProccessingTimeState(results.proccessingTime);
     animateSorting(animations);
   };
 
   const heapSort = () => {
-    const animations = getHeapSortAnimations(duplicateArray, arraySize);
+    setProccessingTimeState(0);
+    const results = getHeapSortAnimations(duplicateArray, arraySize);
+    const animations = results.animations;
+    setProccessingTimeState(results.proccessingTime);
     animateSorting(animations);
   };
 
   const insertionSort = () => {
+    setProccessingTimeState(0);
     setDisableButtons(true);
     // ref.current?.scrollIntoView({ behavior: "smooth" });
-    const animations: number[][] = getInsertionSortAnimations(
-      duplicateArray,
-      arraySize
-    );
+    const results = getInsertionSortAnimations(duplicateArray, arraySize);
+    const animations = results.animations;
+    setProccessingTimeState(results.proccessingTime);
     const arrayBars = document.getElementsByClassName(
       "arrayBar"
     ) as HTMLCollectionOf<HTMLElement>;
@@ -206,84 +219,99 @@ function App() {
           </div>
 
           <div className="buttons flex flex-col sm:flex-row flex-wrap gap-[10px] items-center justify-center">
-            <button
-              disabled={disableButtons}
-              onClick={resetArray}
-              className={
-                disableButtons
-                  ? `bg-[#d3d3d3c6] rounded-[10px] text-[#491a90] font-semibold transition  px-[21px] py-[11px] text-[14px] inline-block outline-none border-none mr-[0.25em] text-center  shadow-md `
-                  : `bg-[#d3d3d3] rounded-[10px] text-[#491a90] font-semibold transition hover:bg-[#d3d3d3c6] px-[21px] py-[11px] text-[14px] inline-block outline-none border-none mr-[0.25em] text-center cursor-pointer shadow-md hover:-translate-y-1`
-              }
-            >
-              Generate New Array
-            </button>
-            <button
-              disabled={!disableButtons}
-              onClick={handleStop}
-              className={
-                !disableButtons
-                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
-                  : ` bg-[#f84027] hover:-translate-y-1 cursor-pointer ${uiBtnStyle}`
-              }
-            >
-              STOP
-            </button>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-[10px] items-center justify-center">
+              <button
+                disabled={disableButtons}
+                onClick={resetArray}
+                className={
+                  disableButtons
+                    ? `bg-[#d3d3d3c6] rounded-[10px] text-[#491a90] font-semibold transition  px-[21px] py-[11px] text-[14px] inline-block outline-none border-none mr-[0.25em] text-center  shadow-md `
+                    : `bg-[#d3d3d3] rounded-[10px] text-[#491a90] font-semibold transition hover:bg-[#d3d3d3c6] px-[21px] py-[11px] text-[14px] inline-block outline-none border-none mr-[0.25em] text-center cursor-pointer shadow-md hover:-translate-y-1`
+                }
+              >
+                Generate New Array
+              </button>
+              <button
+                disabled={!disableButtons}
+                onClick={handleStop}
+                className={
+                  !disableButtons
+                    ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                    : ` bg-[#f84027] hover:-translate-y-1 cursor-pointer ${uiBtnStyle}`
+                }
+              >
+                STOP
+              </button>
+              <button
+                onClick={handleReset}
+                className={` bg-[#f84027] hover:-translate-y-1 cursor-pointer ${uiBtnStyle}`}
+              >
+                Reset
+              </button>
+            </div>
 
-            <button
-              disabled={disableButtons}
-              onClick={bubbleSort}
-              className={
-                disableButtons
-                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
-                  : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
-              }
-            >
-              Bubble Sort
-            </button>
-            <button
-              disabled={disableButtons}
-              onClick={selectionSort}
-              className={
-                disableButtons
-                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
-                  : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
-              }
-            >
-              Selection Sort
-            </button>
-            <button
-              disabled={disableButtons}
-              onClick={quickSort}
-              className={
-                disableButtons
-                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
-                  : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
-              }
-            >
-              Quick Sort
-            </button>
-            <button
-              disabled={disableButtons}
-              onClick={heapSort}
-              className={
-                disableButtons
-                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
-                  : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
-              }
-            >
-              Heap Sort
-            </button>
-            <button
-              disabled={disableButtons}
-              onClick={insertionSort}
-              className={
-                disableButtons
-                  ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
-                  : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
-              }
-            >
-              Insertion Sort
-            </button>
+            <div className="flex flex-col sm:flex-row flex-wrap gap-[10px] items-center justify-center">
+              <button
+                disabled={disableButtons}
+                onClick={bubbleSort}
+                className={
+                  disableButtons
+                    ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                    : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
+                }
+              >
+                Bubble Sort
+              </button>
+              <button
+                disabled={disableButtons}
+                onClick={selectionSort}
+                className={
+                  disableButtons
+                    ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                    : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
+                }
+              >
+                Selection Sort
+              </button>
+              <button
+                disabled={disableButtons}
+                onClick={quickSort}
+                className={
+                  disableButtons
+                    ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                    : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
+                }
+              >
+                Quick Sort
+              </button>
+              <button
+                disabled={disableButtons}
+                onClick={heapSort}
+                className={
+                  disableButtons
+                    ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                    : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
+                }
+              >
+                Heap Sort
+              </button>
+              <button
+                disabled={disableButtons}
+                onClick={insertionSort}
+                className={
+                  disableButtons
+                    ? ` bg-[#d3d3d3c6] ${uiBtnStyle}`
+                    : ` bg-[#8431ff] hover:-translate-y-1 hover:bg-[#9762e6] cursor-pointer ${uiBtnStyle}`
+                }
+              >
+                Insertion Sort
+              </button>
+            </div>
+            <div>
+              <h2 className="mt-4 text-center text-[18px] font-bold text-[#d3d3d3]">
+                Real proccessing time in : {proccessingTimeState} ms
+              </h2>
+            </div>
           </div>
         </div>
         <div

@@ -5,8 +5,15 @@ export const getSelectionSortAnimations = (
   arraySize: number
 ) => {
   const animations: number[][] = [];
+  let startingTime = performance.now();
   selectionSort(array, arraySize, animations);
-  return animations;
+  let endingTime = performance.now();
+  let proccessingTime = endingTime - startingTime;
+  const results = {
+    animations: animations,
+    proccessingTime: proccessingTime,
+  };
+  return results;
 };
 
 function selectionSort(

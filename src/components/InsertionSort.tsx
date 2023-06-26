@@ -3,8 +3,15 @@ export const getInsertionSortAnimations = (
   arraySize: number
 ) => {
   const animations: number[][] = [];
+  let startingTime = performance.now();
   insertionSort(array, arraySize, animations);
-  return animations;
+  let endingTime = performance.now();
+  let proccessingTime = endingTime - startingTime;
+  const results = {
+    animations: animations,
+    proccessingTime: proccessingTime,
+  };
+  return results;
 };
 
 const insertionSort = (

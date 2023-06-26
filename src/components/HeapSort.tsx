@@ -2,8 +2,15 @@ import swap from "./Swap";
 
 export const getHeapSortAnimations = (array: number[], arraySize: number) => {
   const animations: number[][] = [];
+  let startingTime = performance.now();
   heapSort(array, arraySize, animations);
-  return animations;
+  let endingTime = performance.now();
+  let proccessingTime = endingTime - startingTime;
+  const results = {
+    animations: animations,
+    proccessingTime: proccessingTime,
+  };
+  return results;
 };
 
 const heapify = (
