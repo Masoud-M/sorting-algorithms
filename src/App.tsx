@@ -250,7 +250,7 @@ function App() {
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row flex-wrap gap-[10px] items-center justify-center">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-[10px] items-center justify-center ">
               <button
                 disabled={disableButtons}
                 onClick={bubbleSort}
@@ -307,10 +307,8 @@ function App() {
                 Insertion Sort
               </button>
             </div>
-            <div>
-              <h2 className="mt-4 text-center text-[18px] font-bold text-[#d3d3d3]">
-                Real proccessing time in : {proccessingTimeState} ms
-              </h2>
+            <div className="flex h-full justify-center items-center  text-center text-[18px] font-bold text-[#d3d3d3]">
+              Real proccessing time in : {proccessingTimeState} ms
             </div>
           </div>
         </div>
